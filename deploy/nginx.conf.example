@@ -1,0 +1,35 @@
+# Example nginx config for thehollywoodschool.com (AWS EC2 / Ubuntu).
+# Serves the Vite build and proxies /api/* to the Supabase Edge Functions so
+# the admin session cookie stays FIRST-PARTY (otherwise admin login fails with
+# 405 / lost cookies in production). Adjust root + SSL paths to your setup.
+
+server {
+    listen 80;
+    server_name thehollywoodschool.com www.thehollywoodschool.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name thehollywoodschool.com www.thehollywoodschool.com;
+
+    # ssl_certificate     /etc/letsencrypt/live/thehollywoodschool.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/thehollywoodschool.com/privkey.pem;
+
+    root /var/www/hollywoodschool/dist;   # <-- your Vite build output
+    index index.html;
+
+    # Admin/API → Supabase Edge Functions (keeps the session cookie first-party)
+    location /api/ {
+        proxy_pass https://ocvamcbwqfqwiyhcdmde.supabase.co/functions/v1/;
+        proxy_ssl_server_name on;
+        proxy_set_header Host ocvamcbwqfqwiyhcdmde.supabase.co;
+        proxy_cookie_domain ocvamcbwqfqwiyhcdmde.supabase.co thehollywoodschool.com;
+    }
+
+    # SPA fallback (client-side routing)
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
