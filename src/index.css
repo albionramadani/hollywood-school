@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Blinker:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 7%;
+    --foreground: 40 20% 90%;
+
+    --card: 0 0% 14%;
+    --card-foreground: 40 20% 90%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 40 20% 90%;
+
+    --primary: 50 30% 50%;
+    --primary-foreground: 0 0% 7%;
+
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 40 20% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 40 10% 60%;
+
+    --accent: 50 30% 50%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 40 20% 90%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 50 30% 50%;
+
+    --radius: 0.75rem;
+
+    --gold: 50 30% 50%;
+    --gold-light: 50 25% 60%;
+    --dark-surface: 0 0% 10%;
+    --footer-bg: 0 0% 20%;
+
+    --hero-text: 40 15% 80%;
+    --hero-accent: 50 30% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
